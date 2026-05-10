@@ -1,30 +1,26 @@
 //! ---------------------------------------- Import
+import { useContext } from "react";
+import { UserContext } from "../contexts/QuizeContext";
 //! ---------------------------------------- Component (Next)
-export const Next = (props) => {
+export const Next = () => {
+  const { dispatch, currentQuestion, state, currentStep } =
+    useContext(UserContext);
   return (
     //! --------------------------------------- Next
     <div className="flex justify-end">
       <button
         onClick={() =>
-          props.dispatch({
+          dispatch({
             type: "Next",
-            final:
-              props.currentQuestion.length - 1 === props.state.index
-                ? true
-                : false,
-            question: props.currentStep,
-            questions: props.currentQuestion,
+            final: currentQuestion.length - 1 === state.index ? true : false,
+            question: currentStep,
+            questions: currentQuestion,
           })
         }
-        disabled={
-          !props.state.userAnswer ||
-          props.state.index === props.currentQuestion.length
-        }
+        disabled={!state.userAnswer || state.index === currentQuestion.length}
         className="cursor-pointer px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl"
       >
-        {props.state.index === props.currentQuestion.length - 1
-          ? "تمام"
-          : "سوال بعدی"}
+        {state.index === currentQuestion.length - 1 ? "تمام" : "سوال بعدی"}
       </button>
     </div>
   );

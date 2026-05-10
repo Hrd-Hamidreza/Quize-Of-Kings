@@ -1,25 +1,29 @@
 //! ---------------------------------------- Import
+import { useContext } from "react";
+import { UserContext } from "../contexts/QuizeContext";
 //! ---------------------------------------- Component (Levels List)
-export const LevelsList = (prop) => {
+export const LevelsList = () => {
+  const { unLockedLevels, setCurrentLevel, levels, currentLevel } =
+    useContext(UserContext);
   return (
     //! --------------------------------------- Levels*/
     <div className="w-[10%] absolute top-[50px] start-[20px] pr-6">
       <h2 className="text-xl font-bold mb-4">سطوح 🧩</h2>
       <ul className="space-y-3">
-        {prop.levels.map((level, idx) => {
+        {levels.map((level, idx) => {
           return (
             <li key={level.id}>
               <button
-                disabled={!prop.unLockedLevels.includes(level.id)}
+                disabled={!unLockedLevels.includes(level.id)}
                 onClick={() => {
-                  prop.dispatch({ type: "FromTheTop" });
-                  prop.setCurrentLevel(level.id);
+                  dispatch({ type: "FromTheTop" });
+                  setCurrentLevel(level.id);
                 }}
-                className={`w-full px-4 py-2 rounded-xl transition-all duration-300 text-right font-semibold ${prop.unLockedLevels.includes(level.id) ? "cursor-pointer" : "cursor-no-drop"}
+                className={`w-full px-4 py-2 rounded-xl transition-all duration-300 text-right font-semibold ${unLockedLevels.includes(level.id) ? "cursor-pointer" : "cursor-no-drop"}
                    ${
-                     level.id === prop.currentLevel
+                     level.id === currentLevel
                        ? "bg-indigo-500"
-                       : prop.unLockedLevels.includes(level.id)
+                       : unLockedLevels.includes(level.id)
                          ? "bg-white/10 hover:bg-white/20"
                          : "bg-gray-500"
                    }
